@@ -2,9 +2,10 @@ import telebot
 import secret
 import random
 import hashlib
-from os import system
-
+import os
+from openai import OpenAI
 bot = telebot.TeleBot(secret.bot)
+
 
 print("Бот запущен")
 #Рандомный код 
@@ -20,16 +21,16 @@ def repeat_all_messages(message):
 #Убийство бота
 @bot.message_handler(commands=[secret.kill] )
 def kill(message):
-    bot.send_message(message.chat.id, "Пошел нахуй мразь ,ладно иду спать!")
+    bot.send_message(message.chat.id, "ИЗвини но иди подальнше ,ладно иду спать!")
     bot.stop_polling()
-    system("clear||cls")
+    os.system("clear||cls")
     print("Бот убит через комманду")
 
 #Поддержка
 @bot.message_handler(commands=["help"])
 @bot.message_handler(regexp="Связь с поддержкой" )
 def hiAi(message): 
-    bot.send_message(message.chat.id, "Связь с поддержкой")
+    bot.send_message(message.chat.id, "@hvpn_help_bot. - Бот поддержки нашего впн сервиса")
 
 #Донат
 @bot.message_handler(regexp="Донат" )
