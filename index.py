@@ -24,7 +24,7 @@ def kill(message):
     bot.send_message(message.chat.id, "ИЗвини но иди подальнше ,ладно иду спать!")
     bot.stop_polling()
     os.system("clear||cls")
-    print("Бот убит через комманду")
+    print(f"{message.from_user.username} ({message.from_user.id}) убил бота через комманду")
 
 #Поддержка
 @bot.message_handler(commands=["help"])
@@ -34,8 +34,13 @@ def hiAi(message):
 
 #Донат
 @bot.message_handler(regexp="Донат" )
-def hiAi(message): 
-    bot.send_message(message.chat.id, "Донат")
+def donat(message): 
+    keyboard = telebot.types.InlineKeyboardMarkup()
+    sbp = telebot.types.InlineKeyboardButton(text="Сбп" ,callback_data="sbp")
+    stars = telebot.types.InlineKeyboardButton(text="Звезды" ,callback_data="stars" )
+    crypra = telebot.types.InlineKeyboardButton(text="Крипта" ,callback_data="crypta")
+    keyboard.add(sbp,stars,crypra)
+    bot.send_message(message.chat.id, "Выбери чем вы хотите задонатить?", reply_markup=keyboard)
 
 #Отзывы
 @bot.message_handler(regexp="Отзывы" )
@@ -65,6 +70,24 @@ def welcome(message):
                      'Привет это оффициальный бот h vpn - howdy vpn. Здесь ты можешь получить код. \n Мы принимаем в оплату в крипте ,и звездами ,сбп.',
                      reply_markup=keyboard)
     
+
+#callback
+@bot.callback_query_handler(func=lambda call: True)
+def callback_inline(call):
+    if call.message:
+        if call.data == "sbp":
+            bot.delete_message(call.message.chat.id, call.message.message_id)
+            bot.send_message(call.message.chat.id, "+79933057642")
+        elif call.data == "stars":
+            bot.delete_message(call.message.chat.id, call.message.message_id)
+            bot.send_message(call.message.chat.id, "Киньте на @imyrj")
+        elif call.data == "crypta":
+            bot.delete_message(call.message.chat.id, call.message.message_id)
+            bot.send_message(call.message.chat.id, " Кошелек - UQApm4N2sSkbLgqGPHi1bfIgF6O0m-L9h4vW6bNvyuQHmtr2")
+        else:
+            bot.send_message(call.message.chat.id, "Неверно!")
+
+
 
     #Нон стоп бот!
 bot.polling(none_stop=True)
