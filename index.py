@@ -1,6 +1,5 @@
 import telebot
 import secret
-import database
 import random
 import hashlib
 import os
@@ -13,20 +12,20 @@ print("Бот запущен")
 @bot.message_handler(commands=["code"] )
 @bot.message_handler(regexp="Получить код" )
 def repeat_all_messages(message): 
-    database.add_to_free(message.from_user.id)
     b = str(random.randint(100,100000))
     ba = secret.a+b+secret.b
     c = hashlib.md5(ba.encode()).hexdigest()
+    msg = message.from_user.id
     bot.send_message(message.chat.id, c)
 
 
 #Убийство бота
-@bot.message_handler(commands=[secret.kill] )
-def kill(message):
-    bot.send_message(message.chat.id, "ИЗвини но иди подальнше ,ладно иду спать!")
-    bot.stop_polling()
-    os.system("clear||cls")
-    print(f"{message.from_user.username} ({message.from_user.id}) убил бота через комманду")
+    @bot.message_handler(commands=[secret.kill] )
+    def kill(message):
+        bot.send_message(message.chat.id, "ИЗвини но иди подальнше ,ладно иду спать!")
+        bot.stop_polling()
+        os.system("clear||cls")
+        print(f"{message.from_user.username} ({message.from_user.id}) убил бота через комманду")
 
 #Поддержка
 @bot.message_handler(commands=["help"])
