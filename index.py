@@ -3,6 +3,7 @@ import secret
 import random
 import hashlib
 import os
+import database as db
 bot = telebot.TeleBot(secret.bot)
 
 
@@ -11,10 +12,15 @@ print("Бот запущен")
 @bot.message_handler(commands=["code"] )
 @bot.message_handler(regexp="Получить код" )
 def repeat_all_messages(message): 
-    b = str(random.randint(100,100000))
-    ba = secret.a+b+secret.b
-    c = hashlib.md5(ba.encode()).hexdigest()
-    msg = message.from_user.id
+    if (db.have(message.from_user.id)<1):
+        b = str(random.randint(100,100000))
+        ba = secret.a+b+secret.b
+        c = hashlib.md5(ba.encode()).hexdigest()
+        msg = message.from_user.id
+        db.add_to_free(msg,c)
+        print(db.have(msg))
+    else:
+        c = "Вы уже получали!"
     bot.send_message(message.chat.id, c)
 
 
