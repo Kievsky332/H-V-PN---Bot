@@ -3,7 +3,6 @@ import secret
 import random
 import hashlib
 import os
-from openai import OpenAI
 bot = telebot.TeleBot(secret.bot)
 
 
