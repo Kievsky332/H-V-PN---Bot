@@ -12,16 +12,17 @@ print("Бот запущен")
 @bot.message_handler(commands=["code"] )
 @bot.message_handler(regexp="Получить код" )
 def repeat_all_messages(message): 
-    if (db.have(message.from_user.id)<1):
+    if (db.have(message.from_user.id)==0):
         b = str(random.randint(100,100000))
         ba = secret.a+b+secret.b
         c = hashlib.md5(ba.encode()).hexdigest()
         msg = message.from_user.id
         db.add_to_free(msg,c)
         print(db.have(msg))
+        
     else:
         c = "Вы уже получали!"
-    bot.send_message(message.chat.id, c)
+    bot.send_message(message.chat.id,c)
 
 
 #Убийство бота
@@ -31,6 +32,7 @@ def repeat_all_messages(message):
         bot.stop_polling()
         os.system("clear||cls")
         print(f"{message.from_user.username} ({message.from_user.id}) убил бота через комманду")
+        
 
 #Поддержка
 @bot.message_handler(commands=["help"])
@@ -50,14 +52,31 @@ def donat(message):
 
 #Отзывы
 @bot.message_handler(regexp="Отзывы" )
-def hiAi(message): 
-    bot.send_message(message.chat.id, "Отзывы")
+def otz(message): 
+    if (db.last_otz() !=None):
+        bot.send_message(message.chat.id,  f"Последний отзыв:  <blockquote>{db.last_otz()}</blockquote> Данный отзыв не проверялся администацией!", parse_mode='HTML')
+    else:
+        bot.send_message(message.chat.id, "Отзывов нету!")
+    
 
 #Оставить отзыв
 @bot.message_handler(regexp="Оставить отзыв" )
-def hiAi(message): 
-    bot.send_message(message.chat.id, "отставьте отзыв")
+def send_otz(message): 
+    if (db.have(message.from_user.id)>=1):
+        if(db.usersendtext(message.from_user.id)<=0):
+            c="Введите ваш отзыв:"
+            bot.send_message(message.chat.id, c)
+            bot.register_next_step_handler(message, process_name_step)
+        else:
+            c = "Вы уже отправляли отзыв!"
+            bot.send_message(message.chat.id, c)
+    else:
+        c = "Вы не наш клиент!"
+        bot.send_message(message.chat.id, c)
 
+#ожидание что пользователь напишет!
+def process_name_step(message):
+    db.add_message(message.from_user.id , message.text)
 
 #Кнопки
 @bot.message_handler(commands=['start'])
