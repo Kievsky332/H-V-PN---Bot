@@ -11,7 +11,7 @@ cur.execute("CREATE TABLE IF NOT EXISTS otz(id INTEGER  PRIMARY KEY AUTOINCREMEN
 
 #Очистка
 #cur.execute("DELETE FROM 'vpn'")
-#cur.execute("DELETE FROM 'otz'")
+cur.execute("DELETE FROM 'otz'")
 
 
 def have(id):
@@ -25,11 +25,14 @@ def add_to_free(id, code):
 def last_otz():
     res = cur.execute("SELECT text FROM `otz` WHERE `id` = (SELECT MAX(`id`) FROM `otz`)")
     a = res.fetchone()
-    return a[0]
+    try :
+        return a[0]
+    except:
+        return None
 def usersendtext(id):
     res = cur.execute(f"SELECT COUNT(*) FROM `otz` WHERE `id_user` ='{id}'")
     a = res.fetchone()
-    return id+": "+a[0]
+    return a[0]
 def add_message(id,text):
     date = datetime.datetime.now() .strftime("%d.%m.%Y %H:%M:%S ")
     cur.execute(f"INSERT INTO `otz` (`date`,`id_user`,`text`)VALUES('{date}','{id}','{text}')")

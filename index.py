@@ -77,6 +77,7 @@ def send_otz(message):
 #ожидание что пользователь напишет!
 def process_name_step(message):
     db.add_message(message.from_user.id , message.text)
+    bot.send_message(message.chat.id, "Спасибо ,за ваш великолепный отзыв!")
 
 #Кнопки
 @bot.message_handler(commands=['start'])

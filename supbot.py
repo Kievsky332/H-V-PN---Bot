@@ -3,15 +3,16 @@ import secret
 from openai import OpenAI
 import os
 import datetime
-
+import logging
 
 bot = telebot.TeleBot(secret.bot_help)
+
+logging.basicConfig(level=logging.ERROR, filename="bot.log",filemode="w",
+                    format="%(asctime)s  %(message)s")
+
 st ="Запущен хэлпер бот\n"
-x =  f"\n{datetime.datetime.now() .strftime("%d.%m.%Y %H:%M:%S ")}"
-print(x+st)
-file = open("C:\github\H-V-PN---Bot\log.txt", "w",encoding='utf-8')
-file.write(x+st)
-file.close
+print(st)
+logging.error(st)
 
 
 
@@ -21,12 +22,8 @@ def kill(message):
     bot.send_message(message.chat.id, "ИЗвини но  иду спать!")
     bot.stop_polling()
     a = f"\n\n{message.from_user.username} ({message.from_user.id}) убил бота через комманду"
-    file = open("C:\github\H-V-PN---Bot\log.txt", "w",encoding='utf-8')
-    print(x+a)
-    file.write(x+a)
-    file.close()
-    
-
+    print(a)
+    logging.error(a)
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
@@ -35,43 +32,37 @@ def welcome(message):
 
 @bot.message_handler(content_types=["text"])
 def ai(message):
-        print(" ")
-        file = open("C:\github\H-V-PN---Bot\log.txt", "w",encoding='utf-8')
-        file.write("\n\n")        
+        print(" ")    
         
-        user = f"\n{message.from_user.username} :  {message.text}"
-        print(x+user)
-        file.write(x+user)
-        file.close
+        user = f"{message.from_user.username} :  {message.text}"
+        print(user)
+        logging.error(user)
+
         #ии бот приветствие 
         client = OpenAI(
         base_url="https://openrouter.ai/api/v1",
         api_key=secret.api,
         )
-        completion = client.chat.completions.create(
-        extra_headers={
-            "HTTP-Referer": "<YOUR_SITE_URL>", # Optional. Site URL for rankings on openrouter.ai.
-            "X-Title": "<YOUR_SITE_NAME>", # Optional. Site title for rankings on openrouter.ai.
-        },
-        extra_body={},
+                # First API call with reasoning
+        response = client.chat.completions.create(
         model="mistralai/devstral-2512:free",
         messages=[
-            {
-            "role": "system",
-            "content": secret.prompt
-            },
-            {
-            "role": "user",
-            "content": message.text
-            }  
-        ]
+                {
+                    "role": "system",
+                    "content": secret.prompt
+                },
+                {
+                    "role": "user",
+                    "content": message.text
+                }
+                ],
+        extra_body={"reasoning": {"enabled": True}}
         )
-        bot.send_message(message.chat.id, completion.choices[0].message.content)
-        ai = "\nИи: "+completion.choices[0].message.content
+
+        bot.send_message(message.chat.id, response.choices[0].message.content)
+        ai = "Ии: "+response.choices[0].message.content+ f" (ответ для @{message.from_user.username})"+"\n"
         
-        print(x+ai)
-        file = open("C:\github\H-V-PN---Bot\log.txt", "w",encoding='utf-8')
-        file.write(x+ai)
-        file.close
+        print(ai)
+        logging.error(ai)
 
 bot.polling(none_stop=True)
