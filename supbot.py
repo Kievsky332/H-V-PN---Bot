@@ -5,7 +5,7 @@ import os
 import datetime
 import logging
 
-bot = telebot.TeleBot(secret.bot_help)
+bot = telebot.TeleBot(secret.bot_help)#замените на телеграмм бот апу
 
 logging.basicConfig(level=logging.ERROR, filename="bot.log",filemode="w",
                     format="%(asctime)s  %(message)s")
@@ -17,7 +17,7 @@ logging.error(st)
 
 
 #Убийство бота
-@bot.message_handler(commands=[secret.kill] )
+@bot.message_handler(commands=[secret.kill] ) #замените на свою комманду
 def kill(message):
     bot.send_message(message.chat.id, "ИЗвини но  иду спать!")
     bot.stop_polling()
@@ -25,7 +25,7 @@ def kill(message):
     print(a)
     logging.error(a)
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['start']) #Обрабатываем старт
 def welcome(message):
     bot.send_message(message.chat.id , f"{message.from_user.username} Привет чем помочь?")
 
@@ -41,7 +41,7 @@ def ai(message):
         #ии бот приветствие 
         client = OpenAI(
         base_url="https://openrouter.ai/api/v1",
-        api_key=secret.api,
+        api_key=secret.api, #Замените на api
         )
                 # First API call with reasoning
         response = client.chat.completions.create(
@@ -49,7 +49,7 @@ def ai(message):
         messages=[
                 {
                     "role": "system",
-                    "content": secret.prompt
+                    "content": secret.prompt #Замените на промпт
                 },
                 {
                     "role": "user",
