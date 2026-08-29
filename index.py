@@ -38,7 +38,7 @@ def repeat_all_messages(message): #Если человек не получал
 @bot.message_handler(commands=["help"])
 @bot.message_handler(regexp="Связь с поддержкой" )
 def hiAi(message): 
-    bot.send_message(message.chat.id, "@hvpn_help_bot. - Бот поддержки нашего впн сервиса")
+    bot.send_message(message.chat.id, "юзернейм. - Бот поддержки нашего впн сервиса")
 
 #Донат
 @bot.message_handler(regexp="Донат" )
@@ -103,13 +103,13 @@ def callback_inline(call):
     if call.message:
         if call.data == "sbp":
             bot.delete_message(call.message.chat.id, call.message.message_id)
-            bot.send_message(call.message.chat.id, "+79933057642")
+            bot.send_message(call.message.chat.id, "+72339247347")
         elif call.data == "stars":
             bot.delete_message(call.message.chat.id, call.message.message_id)
-            bot.send_message(call.message.chat.id, "Киньте на @imyrj")
+            bot.send_message(call.message.chat.id, "Киньте на @")
         elif call.data == "crypta":
             bot.delete_message(call.message.chat.id, call.message.message_id)
-            bot.send_message(call.message.chat.id, " Кошелек - UQApm4N2sSkbLgqGPHi1bfIgF6O0m-L9h4vW6bNvyuQHmtr2")
+            bot.send_message(call.message.chat.id, " Кошелек - ")
         else:
             bot.send_message(call.message.chat.id, "Неверно!")
 

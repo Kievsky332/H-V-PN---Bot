@@ -2,7 +2,7 @@ import sqlite3
 import secret
 import datetime 
 
-con = sqlite3.connect(f"{secret.put}//user.db",check_same_thread=False)#Вместо secret.put замените на путь до вашей бд
+con = sqlite3.connect("user.db", check_same_thread=False)
 cur = con.cursor()
 
 #создание
