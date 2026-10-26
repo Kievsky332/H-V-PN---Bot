@@ -1,37 +1,100 @@
-# бот телеграмм
+# H-V-PN---Bot
 
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUGGobTS6I9JT-gstxyJqLtJxpVKv3LhNvKOGsyGMrJs97EeYietIkeTLp&s=10">
+Telegram-бот для проекта Howdy-Vpn (HVPN). Предоставляет пользователям хэш-коды, информацию о донатах, отзывы, а также интегрирует ИИ-поддержку для автоматических ответов на вопросы.
 
-Бот состоит из трёх частей:
-- index.py, Выдает хэш коды  и перенаправляет на поддержку, тапкже донат, последний отзыв, и оставить отзыв.
-- supbot.py, Поддержка, который отвечает ии.
-- secret.py, все секретные переменные
+![Static Badge](https://img.shields.io/badge/Kievsky332-H_VPN_Bot-blue)
+![GitHub top language](https://img.shields.io/github/languages/top/Kievsky332/H-V-PN---Bot)
+![GitHub](https://img.shields.io/github/license/Kievsky332/H-V-PN---Bot)
+![GitHub Repo stars](https://img.shields.io/github/stars/Kievsky332/H-V-PN---Bot)
+
+---
+
+## Важные примечания
+
+> [!NOTE]
+> Для работы модуля ИИ-поддержки необходим действительный API-ключ OpenRouter. 
+
 > [!WARNING]
-> Возможно не работает т.к OpenRouter заблокировал пользователей из России.
-- database.py, Вся база данных.
+> Сервис OpenRouter может блокировать запросы из России. Для корректной работы бота настоятельно рекомендуется запускать его на сервере с использованием VPN или прокси.
 
-# переменные
-- bot_help   api key от telebot для поддержки
-- bot  api key от telebot для бота
-- a   соль
-- b  соль
-- kill команда для убийства бота
-- api  api ключ openrouter
-- prompt  промпт
+---
+
+## Архитектура проекта
+
+Бот состоит из нескольких логически разделенных модулей:
+
+- **index.py** — основной модуль бота. Отвечает за выдачу хэш-кодов, перенаправление в поддержку, отображение информации о донатах, а также работу с системой отзывов (просмотр последнего и создание нового).
+- **supbot.py** — модуль поддержки, который обрабатывает сложные запросы пользователей с помощью нейросети (ИИ).
+- **database.py** — модуль для взаимодействия с базой данных (хранение пользователей, отзывов, хэш-кодов).
+- **secret.py** — файл конфигурации, содержащий все секретные переменные и ключи.
+
+---
+
+## Стек технологий и модули
+
+- **Язык:** Python 3.x
+- **База данных:** SQLite3
+- **Основные библиотеки:**
+  - `telebot` (pyTelegramBotAPI) — фреймворк для работы с Telegram Bot API
+  - `openai` (OpenRouter) — интеграция с языковыми моделями для ИИ-ответов
+  - `hashlib`, `random` — генерация и хэширование кодов
+  - `sqlite3`, `datetime`, `logging`, `os` — стандартные библиотеки для работы с данными, временем, логированием и окружением
+
+---
+
+## Установка и настройка
+
+1. Склонируйте репозиторий:
+   ```bash
+   git clone https://github.com/Kievsky332/H-V-PN---Bot.git
+   ```
+2. Перейдите в папку
+   ```bash
+    cd H-V-PN---Bot
+   ```
+3. Установите все модули
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Заполните данные
+- bot — API-ключ основного бота от @BotFather
+- bot_help — API-ключ бота для поддержки (если используется отдельный бот)
+- api — ваш API-ключ от OpenRouter
+- prompt — системный промпт для ИИ-модели
+- a, b — соли для хэширования
+- kill — секретная команда для экстренной остановки бота
+
+5.Запустите  базу данных:
+  ```bash
+  python3 database.py
+  ```
+
+6.Запустите основного бота:
+  ```bash
+  python3 index.py
+  ```
+7.Запустите  бота помощника(Необязательно):
+  ```bash
+  python3 supbot.py
+  ```
+---
+
+## Ссылки
 
 
-## Написано на:
-- python
-- sqlite3
-## Модули:
-- telebot
-- random
-- hashlib
-- os
-- openai import OpenAI
-- datetime
-- logging
-- sqlite3
+- **Исходный код:** [github.com/Kievsky332/BuSsite](https://github.com/Kievsky332/H-V-PN---Bot)
 
-## Автор
-© 2026 kievsky332
+---
+
+## Поддержка и обратная связь
+
+Если у вас есть идеи, или вы нашли баг, создайте [Issue](https://github.com/Kievsky332/H-V-PN---Bot/issues/new) в этом репозитории или свяжитесь со мной:
+- **Telegram:** [@imyrj](https://t.me/imyrj)
+- **Email:** admin@sorav.ru
+
+---
+
+<p align="center">
+  <sub>© 2026 kievsky332.<br> Сделано с любовью</sub>
+</p>
