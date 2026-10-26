@@ -83,7 +83,7 @@ Telegram-бот для проекта Howdy-Vpn (HVPN). Предоставляе
 ## Ссылки
 
 
-- **Исходный код:** [github.com/Kievsky332/BuSsite](https://github.com/Kievsky332/H-V-PN---Bot)
+- **Исходный код:** [github.com/Kievsky332/H-V-PN---Bot](https://github.com/Kievsky332/H-V-PN---Bot)
 
 ---
 
